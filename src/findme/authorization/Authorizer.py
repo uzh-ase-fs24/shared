@@ -1,3 +1,4 @@
+import functools
 import json
 
 from aws_lambda_powertools.event_handler import APIGatewayRestResolver
@@ -65,12 +66,18 @@ class Authorizer:
             raise UnauthorizedError("Invalid header, unable to parse JWT token")
         return payload
 
-    def requires_auth(self, func, app: APIGatewayRestResolver):
-        def wrapper(*args, **kwargs):
-            auth_header = app.current_event.resolved_headers_field.get("Authorization")
-            token = self._extract_token(auth_header)
-            claims = self._verify(token)
-            app.append_context(claims=claims)
-            return func(*args, **kwargs)
+    def requires_auth(self, app: APIGatewayRestResolver):
+        def decorator(func):
+            @functools.wraps(func)
+            def wrapper(*args, **kwargs):
+                auth_header = app.current_event.resolved_headers_field.get(
+                    "Authorization"
+                )
+                token = self._extract_token(auth_header)
+                claims = self._verify(token)
+                app.append_context(claims=claims)
+                return func(*args, **kwargs)
 
-        return wrapper
+            return wrapper
+
+        return decorator
