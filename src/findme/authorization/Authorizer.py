@@ -70,9 +70,7 @@ class Authorizer:
         def decorator(func):
             @functools.wraps(func)
             def wrapper(*args, **kwargs):
-                auth_header = app.current_event.resolved_headers_field.get(
-                    "Authorization"
-                )
+                auth_header = app.current_event.headers.get("Authorization")
                 token = self._extract_token(auth_header)
                 claims = self._verify(token)
                 app.append_context(claims=claims)
