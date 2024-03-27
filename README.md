@@ -8,7 +8,7 @@ and is then installed via pip.
 ```yaml
 shared
 -- findme # The main package
--- authorization # Contains the authorization module to authenticate the findme API
+  -- authorization # Contains the authorization module to authenticate the findme API
 -- tests # local tests
 -- pyproject.toml # The poetry configuration file
 ```
