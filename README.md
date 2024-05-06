@@ -1,4 +1,10 @@
-# findMe Shared Library
+<p align="center">
+  <a href="https://github.com/uzh-ase-fs24" target="_blank">
+    <img alt="findme-logo" height="150" src="https://github.com/uzh-ase-fs24/workspace/wiki/logos/findMe_square_solid.png"/>
+  </a>
+</p>
+
+# findMe Shared Library 🛠️
 
 This repository contains the source code for the findMe shared library. It is organized as a python package using poetry
 and is then installed via pip.
